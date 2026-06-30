@@ -7,6 +7,13 @@ namespace VideoGameCharacterApi.Services
 {
     public class VideoGameCharacterService(AppDbContext context) : IVideoGameCharacterService
     {
+        // An alternative way to inject the AppDbContext into the service class is to use a constructor parameter, as shown above. This allows for better testability and separation of concerns.
+        // Instead of this:
+        // public class VideoGameCharacterService(AppDbContext context) : IVideoGameCharacterService
+        // You can use this:
+        // 1. create a local var _context to hold the injected context
+        // 2. Inject context into the constructor and assign it to _context
+
         public async Task<List<CharacterDto>> GetAllCharactersAsync() =>
             await context.Characters.Select(c => new CharacterDto { Name = c.Name, Game = c.Game, Role = c.Role }).ToListAsync();
 

@@ -6,15 +6,20 @@ using VideoGameCharacterApi.Services;
 
 namespace VideoGameCharacterApi.Controllers
 {
+    // When adding this controller, be sure to choose api controoler, not mvc controller.
+
     [Route("api/[controller]")]
     [ApiController]
     public class VideoGameCharactersController(IVideoGameCharacterService service) : ControllerBase
     {
-        [HttpGet(Name = "GetCharacters")]
+        //[HttpGet(Name = "GetCharacters")]
+        [HttpGet("characters")] // another way: this is the route for the GetCharacters method, which will be api/VideoGameCharacters/characters
         public async Task<ActionResult<List<CharacterDto>>> GetCharacters() => Ok(await service.GetAllCharactersAsync());
 
 
         [HttpGet("{id}", Name = "GetCharacter")]
+        //optional: [ProducesResponseType(StatusCodes.Status200OK)]
+        //optional: [ProducesErrorResponseType(typeof(ProblemDetails))]        
         public async Task<ActionResult<CharacterDto>> GetCharacter(int id)
         {
             var c = await service.GetCharacterByIdAsync(id);
